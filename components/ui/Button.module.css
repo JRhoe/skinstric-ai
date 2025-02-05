@@ -1,0 +1,11 @@
+.outer, .inner{
+    transition: all 250ms ease-in-out;
+}
+
+.button:hover .outer{
+    padding: 4px;
+}
+.button:hover .inner{
+    border: 1px dotted black;
+    padding: 8px;
+}

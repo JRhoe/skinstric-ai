@@ -11,7 +11,14 @@ export default {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
+        "main": {
+          black: "#1A1B1C"
+        }
       },
+      fontFamily: {
+        roobertReg: ["var(--RoobertRegular)"],
+        roobertSemiBold: ["var(--RoobertSemiBold)"],
+      }
     },
   },
   plugins: [],
