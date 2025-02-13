@@ -6,8 +6,8 @@ import BackGroundSquares from "./ui/Squares";
 import LeaveConfirmation from "./ui/LeaveConfirmation";
 import LoadingSquares from "./ui/LoadingSquares";
 
-type Library = any;
-const libraries: Library[] = ["places"];
+type Libraries = ["places"]
+const libraries:Libraries = ["places"]
 
 const IntroModule = () => {
 	const [locationFormShown, setLocationFormShown] = useState<boolean>(false);
@@ -85,10 +85,10 @@ const IntroModule = () => {
 	}
 
 	function updatePlace() {
-		const location: any = locationRef.current?.getPlace();
+		const location = locationRef.current?.getPlace();
 		setUserInfo((prev) => ({
 			name: prev.name,
-			location: location?.address_components[0].long_name,
+			location: location?.address_components ? location?.address_components[0].long_name : "",
 		}));
 	}
 
