@@ -6,8 +6,8 @@ import BackGroundSquares from "./ui/Squares";
 import LeaveConfirmation from "./ui/LeaveConfirmation";
 import LoadingSquares from "./ui/LoadingSquares";
 
-type Libraries = ["places"]
-const libraries:Libraries = ["places"]
+type Library = any; // eslint-disable-line @typescript-eslint/no-explicit-any
+const libraries: Library[] = ["places"];
 
 const IntroModule = () => {
 	const [locationFormShown, setLocationFormShown] = useState<boolean>(false);
@@ -85,10 +85,10 @@ const IntroModule = () => {
 	}
 
 	function updatePlace() {
-		const location = locationRef.current?.getPlace();
+		const location: any = locationRef.current?.getPlace(); // eslint-disable-line @typescript-eslint/no-explicit-any
 		setUserInfo((prev) => ({
 			name: prev.name,
-			location: location?.address_components ? location?.address_components[0].long_name : "",
+			location: location?.address_components[0].long_name,
 		}));
 	}
 
