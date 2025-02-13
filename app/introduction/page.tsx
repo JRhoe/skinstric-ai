@@ -1,5 +1,4 @@
 import IntroModule from '@/components/IntroModule';
-import Button from '@/components/ui/Button';
 import { Metadata } from 'next';
 import React from 'react';
 

@@ -27,7 +27,7 @@ const IntroModule = () => {
 	let error = false;
 	let tempNameField = userInfo.name;
 
-	let locationRef = useRef<google.maps.places.Autocomplete>(null);
+	const locationRef = useRef<google.maps.places.Autocomplete>(null);
 	const { isLoaded } = useJsApiLoader({
 		id: "google-map-script",
 		googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_API_KEY!,
@@ -48,14 +48,11 @@ const IntroModule = () => {
 				}
 			);
 			const data = await response.json();
+			console.log(data)
 		} catch (error) {
 			console.log(error);
 		}
 	}
-
-	useEffect(() => {
-		sumbitForm();
-	}, []);
 
 	function doProceedAction() {
 		if (!error) {
@@ -196,7 +193,7 @@ const IntroModule = () => {
 												errorText.innerHTML = "WHERE ARE YOU FROM?";
 											}
 											if (locationInputField)
-												//@ts-ignore
+												//@ts-expect-error
 												locationInputField.placeholder = "Enter a location";
 										}}
 										onBlur={() => {
@@ -206,7 +203,7 @@ const IntroModule = () => {
 												errorText.innerHTML = "CLICK TO TYPE";
 											}
 											if (locationInputField)
-												//@ts-ignore
+												//@ts-expect-error
 												locationInputField.placeholder = "Where are you from?";
 										}}
 									/>
