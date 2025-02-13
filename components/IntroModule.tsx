@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import { useJsApiLoader, Autocomplete } from "@react-google-maps/api";
 import Button from "./ui/Button";
 import BackGroundSquares from "./ui/Squares";
@@ -193,7 +193,7 @@ const IntroModule = () => {
 												errorText.innerHTML = "WHERE ARE YOU FROM?";
 											}
 											if (locationInputField)
-												//@ts-expect-error
+												//@ts-expect-error: placeholder property may not exist
 												locationInputField.placeholder = "Enter a location";
 										}}
 										onBlur={() => {
@@ -203,7 +203,7 @@ const IntroModule = () => {
 												errorText.innerHTML = "CLICK TO TYPE";
 											}
 											if (locationInputField)
-												//@ts-expect-error
+												//@ts-expect-error: placeholder property may not exist
 												locationInputField.placeholder = "Where are you from?";
 										}}
 									/>
