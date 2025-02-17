@@ -1,13 +1,7 @@
-"use client"
 import Link from "next/link";
 import React, { useEffect } from "react";
 
 const LeaveConfirmation = () => {
-	let leaveConfirmationCard: HTMLElement | null;
-
-	useEffect(() => {
-		leaveConfirmationCard = document.getElementById("leaveConfirmationCard");
-	}, []);
 
 	return (
 		<div
@@ -29,9 +23,9 @@ const LeaveConfirmation = () => {
 				</Link>
 				<button
 					className="uppercase text-[14px] text-white px-3 tracking-wider"
-					onClick={() => {
-						if (leaveConfirmationCard)
-							leaveConfirmationCard.style.display = "none";
+					onClick={(e) => {
+						if(e.currentTarget.parentElement && e.currentTarget.parentElement.parentElement)
+							e.currentTarget.parentElement.parentElement.style.display = "none";
 					}}>
 					Stay
 				</button>
