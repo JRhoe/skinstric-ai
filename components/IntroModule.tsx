@@ -1,5 +1,5 @@
 "use client";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useJsApiLoader, Autocomplete } from "@react-google-maps/api";
 import Button from "./ui/Button";
 import BackGroundSquares from "./ui/Squares";
@@ -17,12 +17,10 @@ const IntroModule = () => {
 		location: "",
 	});
 
-	const errorText = document.getElementById("errorText");
-	const proceedButton = document.getElementById("proceedButton");
-	const locationInputField = document.getElementById("locationInput");
-	const leaveConfirmationCard = document.getElementById(
-		"leaveConfirmationCard"
-	);
+	let errorText: HTMLElement | null;
+	let proceedButton: HTMLElement | null;
+	let locationInputField: HTMLElement | null;
+	let leaveConfirmationCard: HTMLElement | null;
 
 	let error = false;
 	let tempNameField = userInfo.name;
@@ -33,6 +31,13 @@ const IntroModule = () => {
 		googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_API_KEY!,
 		libraries,
 	});
+
+	useEffect(() => {
+		errorText = document.getElementById("errorText");
+		proceedButton = document.getElementById("proceedButton");
+		locationInputField = document.getElementById("locationInput");
+		leaveConfirmationCard = document.getElementById("leaveConfirmationCard");
+	},[])
 
 	async function sumbitForm() {
 		setLoading(true);
