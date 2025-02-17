@@ -37,7 +37,7 @@ const IntroModule = () => {
 		proceedButton = document.getElementById("proceedButton");
 		locationInputField = document.getElementById("locationInput");
 		leaveConfirmationCard = document.getElementById("leaveConfirmationCard");
-	},[])
+	}, []);
 
 	async function sumbitForm() {
 		setLoading(true);
@@ -53,7 +53,7 @@ const IntroModule = () => {
 				}
 			);
 			const data = await response.json();
-			console.log(data)
+			console.log(data);
 		} catch (error) {
 			console.log(error);
 		}

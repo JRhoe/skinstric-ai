@@ -1,10 +1,14 @@
+"use client"
 import Link from "next/link";
-import React from "react";
+import React, { useEffect } from "react";
 
 const LeaveConfirmation = () => {
-	const leaveConfirmationCard = document.getElementById(
-		"leaveConfirmationCard"
-	);
+	let leaveConfirmationCard: HTMLElement | null;
+
+	useEffect(() => {
+		leaveConfirmationCard = document.getElementById("leaveConfirmationCard");
+	}, []);
+
 	return (
 		<div
 			id="leaveConfirmationCard"
