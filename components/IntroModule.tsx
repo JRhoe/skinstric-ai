@@ -19,15 +19,13 @@ const IntroModule = () => {
 
 	const errorTextRef = useRef<HTMLElement>(null);
 	const proceedButtonRef = useRef<HTMLElement>(null);
-	const locationInputFieldRef = useRef<HTMLElement>(null);
 	const leaveConfirmationCardRef = useRef<HTMLElement>(null);
 
 	const errorText = errorTextRef.current;
 	const proceedButton = proceedButtonRef.current;
-	const locationInputField = locationInputFieldRef.current;
 	const leaveConfirmationCard = leaveConfirmationCardRef.current;
 
-	let error = false;
+	let isError = false;
 	let tempNameField = userInfo.name;
 
 	const locationRef = useRef<google.maps.places.Autocomplete>(null);
@@ -40,7 +38,6 @@ const IntroModule = () => {
 	useEffect(() => {
 		errorTextRef.current = document.getElementById("errorText");
 		proceedButtonRef.current = document.getElementById("proceedButton");
-		locationInputFieldRef.current = document.getElementById("locationInput");
 		leaveConfirmationCardRef.current = document.getElementById(
 			"leaveConfirmationCard"
 		);
@@ -67,7 +64,7 @@ const IntroModule = () => {
 	}
 
 	function doProceedAction() {
-		if (!error) {
+		if (!isError) {
 			if (locationFormShown) {
 				if (userInfo.location) {
 					sumbitForm();
@@ -136,11 +133,11 @@ const IntroModule = () => {
                     focus:placeholder-opacity-0 text-center text-[60px] tracking-tighter px-[8px] focus:outline-none 
                     border-b-2 border-black border-opacity-50 w-[500px] bg-transparent`}
 								onFocus={() => {
-									if (!error && tempNameField === "")
+									if (!isError && tempNameField === "")
 										if (errorText) errorText.innerHTML = "INTRODUCE YOURSELF";
 								}}
 								onBlur={() => {
-									if (!error && tempNameField === "")
+									if (!isError && tempNameField === "")
 										if (errorText) errorText.innerHTML = "CLICK TO TYPE";
 								}}
 								onChange={(e) => {
@@ -153,7 +150,7 @@ const IntroModule = () => {
 												"opacity-100 text-red-600 text-[14px] relative top-[-50px] uppercase";
 											errorText.innerHTML = "No numbers or special characters";
 										}
-										error = true;
+										isError = true;
 									} else {
 										//if the error gets fixed reset the errortext color
 										if (errorText) {
@@ -161,7 +158,7 @@ const IntroModule = () => {
 												"opacity-40 text-main-black text-[14px] relative top-[-50px] uppercase";
 											errorText.innerHTML = "INTRODUCE YOURSELF";
 										}
-										error = false;
+										isError = false;
 									}
 
 									if (e.target.value === "") {
@@ -171,7 +168,7 @@ const IntroModule = () => {
 												"opacity-40 text-main-black text-[14px] relative top-[-50px] uppercase";
 											errorText.innerHTML = "INTRODUCE YOURSELF";
 										}
-										error = false;
+										isError = false;
 									} else {
 										if (proceedButton) proceedButton.style.display = "flex";
 									}
@@ -198,25 +195,21 @@ const IntroModule = () => {
 										className={`placeholder-main-black focus:placeholder-opacity-50 text-center text-[60px]
                             tracking-tighter px-[8px] focus:outline-none border-b-2 border-black border-opacity-50
                             w-[530px] bg-transparent`}
-										onFocus={() => {
+										onFocus={(e) => {
 											if (errorText) {
 												errorText.className =
 													"opacity-40 text-main-black text-[14px] relative top-[-50px] uppercase";
 												errorText.innerHTML = "WHERE ARE YOU FROM?";
 											}
-											if (locationInputField)
-												//@ts-expect-error: placeholder property may not exist
-												locationInputField.placeholder = "Enter a location";
+											e.target.placeholder = "Enter a location";
 										}}
-										onBlur={() => {
+										onBlur={(e) => {
 											if (errorText) {
 												errorText.className =
 													"opacity-40 text-main-black text-[14px] relative top-[-50px] uppercase";
 												errorText.innerHTML = "CLICK TO TYPE";
 											}
-											if (locationInputField)
-												//@ts-expect-error: placeholder property may not exist
-												locationInputField.placeholder = "Where are you from?";
+											e.target.placeholder = "Where are you from?";
 										}}
 									/>
 								</Autocomplete>
