@@ -17,10 +17,15 @@ const IntroModule = () => {
 		location: "",
 	});
 
-	let errorText: HTMLElement | null;
-	let proceedButton: HTMLElement | null;
-	let locationInputField: HTMLElement | null;
-	let leaveConfirmationCard: HTMLElement | null;
+	const errorTextRef = useRef<HTMLElement>(null);
+	const proceedButtonRef = useRef<HTMLElement>(null);
+	const locationInputFieldRef = useRef<HTMLElement>(null);
+	const leaveConfirmationCardRef = useRef<HTMLElement>(null);
+
+	const errorText = errorTextRef.current;
+	const proceedButton = proceedButtonRef.current;
+	const locationInputField = locationInputFieldRef.current;
+	const leaveConfirmationCard = leaveConfirmationCardRef.current;
 
 	let error = false;
 	let tempNameField = userInfo.name;
@@ -33,10 +38,12 @@ const IntroModule = () => {
 	});
 
 	useEffect(() => {
-		errorText = document.getElementById("errorText");
-		proceedButton = document.getElementById("proceedButton");
-		locationInputField = document.getElementById("locationInput");
-		leaveConfirmationCard = document.getElementById("leaveConfirmationCard");
+		errorTextRef.current = document.getElementById("errorText");
+		proceedButtonRef.current = document.getElementById("proceedButton");
+		locationInputFieldRef.current = document.getElementById("locationInput");
+		leaveConfirmationCardRef.current = document.getElementById(
+			"leaveConfirmationCard"
+		);
 	}, []);
 
 	async function sumbitForm() {
