@@ -6,25 +6,20 @@ import Image from "next/image";
 import shutterImg from "@/public/CameraShutter.png";
 import placeholderImg from "@/public/ImagePlaceHolder.png";
 import ConfirmationBox from "./ui/ConfirmationBox";
-import DiamondIcon from "@/public/DiamondIcon.svg"
+import DiamondIcon from "@/public/DiamondIcon.svg";
+
+type boxes = "scan" | "upload"
 
 const AnalysisModule = () => {
-	const [scanConfirmationActive, setScanConfirmationActive] = useState<
-		boolean | null
-	>(null);
-	const [uploadConfirmationActive, setUploadConfirmationActive] = useState<
-		boolean | null
-	>(null);
 
-	function activateConfirmationBox(box: "upload" | "scan") {
-		if (box === "upload") {
-			if (scanConfirmationActive) setScanConfirmationActive(false);
-			setUploadConfirmationActive(true);
-		} else if (box === "scan") {
-			if (uploadConfirmationActive) setUploadConfirmationActive(false);
-			setScanConfirmationActive(true);
-		}
+	const [ConfirmationActive, setConfirmationActive] = useState<
+		[boxes | null, boxes | null]
+	>([null, null]);
+
+	function activateConfirmationBox(boxToOpen: boxes) {
+		setConfirmationActive(prev => [boxToOpen, prev[0]])
 	}
+
 
 	return (
 		<>
@@ -56,11 +51,11 @@ const AnalysisModule = () => {
 				<div className="h-full w-[20%] flex items-center flex-col justify-between">
 					<div className="flex items-start justify-center">
 						<ConfirmationBox
-						active={scanConfirmationActive}
-						button1Text=""
-						closeButtonText="ok"
-						classNames="absolute h-[125px]"
-						closeFunction={() => setScanConfirmationActive(false)}>
+							active={ConfirmationActive}
+							boxName="scan"
+							closeButtonText="ok"
+							classNames="absolute h-[125px]"
+							closeFunction={() => setConfirmationActive([null, "scan"])}>
 							<div className="w-full h-full p-3">
 								<p className="text-white text-[16px] uppercase tracking-wider">
 									this feature has not been implamented yet
@@ -68,35 +63,52 @@ const AnalysisModule = () => {
 							</div>
 						</ConfirmationBox>
 						<ConfirmationBox
-							active={uploadConfirmationActive}
+							active={ConfirmationActive}
+							boxName={"upload"}
 							button1Text="upload"
 							closeButtonText="cancel"
 							classNames="absolute h-[300px]"
-							closeFunction={() => setUploadConfirmationActive(false)}>
-								<div className="w-full h-full">
-									<div className="border-b border-b-white pl-3 p-2"><p className="text-white tracking-wider uppercase text-sm">Please ensure your selfie has:</p></div>
-									<div className="flex items-start justify-start p-2">
-										<Image src={DiamondIcon} alt="bullet point"/>
-										<div className="pl-2">
-											<p className="text-white uppercase tracking-wider">Neutral expression</p>
-											<p className="text-white text-xs tracking-wider opacity-30">smiling may distort wrinkles</p>
-										</div>
-									</div>
-									<div className="flex items-start justify-start p-2">
-										<Image src={DiamondIcon} alt="bullet point"/>
-										<div className="pl-2">
-											<p className="text-white uppercase tracking-wider">frontal pose</p>
-											<p className="text-white text-xs tracking-wider opacity-30">take the image from an arm's length away at eye level</p>
-										</div>
-									</div>
-									<div className="flex items-start justify-start p-2">
-										<Image src={DiamondIcon} alt="bullet point"/>
-										<div className="pl-2">
-											<p className="text-white uppercase tracking-wider">adequate lighting</p>
-											<p className="text-white text-xs tracking-wider opacity-30">avoid harsh downlighting and aim for natural or soft light</p>
-										</div>
+							closeFunction={() => setConfirmationActive([null, "upload"])}>
+							<div className="w-full h-full">
+								<div className="border-b border-b-white pl-3 p-2">
+									<p className="text-white tracking-wider uppercase text-sm">
+										Please ensure your selfie has:
+									</p>
+								</div>
+								<div className="flex items-start justify-start p-2">
+									<Image src={DiamondIcon} alt="bullet point" />
+									<div className="pl-2">
+										<p className="text-white uppercase tracking-wider">
+											Neutral expression
+										</p>
+										<p className="text-white text-xs tracking-wider opacity-30">
+											smiling may distort wrinkles
+										</p>
 									</div>
 								</div>
+								<div className="flex items-start justify-start p-2">
+									<Image src={DiamondIcon} alt="bullet point" />
+									<div className="pl-2">
+										<p className="text-white uppercase tracking-wider">
+											frontal pose
+										</p>
+										<p className="text-white text-xs tracking-wider opacity-30">
+											take the image from an arm's length away at eye level
+										</p>
+									</div>
+								</div>
+								<div className="flex items-start justify-start p-2">
+									<Image src={DiamondIcon} alt="bullet point" />
+									<div className="pl-2">
+										<p className="text-white uppercase tracking-wider">
+											adequate lighting
+										</p>
+										<p className="text-white text-xs tracking-wider opacity-30">
+											avoid harsh downlighting and aim for natural or soft light
+										</p>
+									</div>
+								</div>
+							</div>
 						</ConfirmationBox>
 					</div>
 					<div className="flex items-center justify-end flex-col">

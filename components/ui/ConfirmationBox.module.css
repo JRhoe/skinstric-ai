@@ -9,6 +9,7 @@
 }
 
 .open {
+    z-index: 10;
     animation-name: openAnimation;
     animation-duration: 2s;
     animation-fill-mode: forwards;
