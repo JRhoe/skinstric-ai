@@ -109,8 +109,14 @@ const IntroModule = () => {
 				<LoadingSquares />
 			) : (
 				<>
-					<div className="flex flex-col justify-center items-center p-[24px] relative">
-						<BackGroundSquares />
+					<div className="flex justify-center items-center p-[24px] relative">
+						<BackGroundSquares
+							size={"w-[400px] h-[400px]"}
+							borderStyle="dashed"
+							speed={150}
+							speedGap={20}
+							classnames=""
+						/>
 
 						<p
 							id="errorText"

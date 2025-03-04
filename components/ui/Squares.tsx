@@ -1,18 +1,27 @@
 import React from "react";
 
-const BackGroundSquares = () => {
+interface squareProps {
+	size:string
+	speed:number
+	speedGap:number
+	borderStyle: "dashed" | "solid"
+	classnames: string
+}
+
+const BackGroundSquares = ({size, borderStyle, speed, speedGap, classnames}: squareProps) => {
+	classnames += `absolute z-[-1] border border-${borderStyle} border-black animate-spin will-change-transform`
 	return (
-		<>
+		<div className={`absolute z-[-1] ${size} flex items-center justify-center rotate-45`}>
 			<div
-				className={`absolute z-[-1] h-[500px] w-[500px] border border-dashed border-black border-opacity-30 animate-spin will-change-transform`}
-				style={{ animationDuration: "150s" }}></div>
+				className={`h-[100%] w-[100%] border-opacity-15 ${classnames}`}
+				style={{ animationDuration: `${speed}s` }}></div>
 			<div
-				className={`absolute z-[-1] h-[525px] w-[525px] border border-dashed border-black border-opacity-20 animate-spin will-change-transform`}
-				style={{ animationDuration: "130s" }}></div>
+				className={`h-[110%] w-[110%] border-opacity-10 ${classnames}`}
+				style={{ animationDuration: `${speed-speedGap}s` }}></div>
 			<div
-				className={`absolute z-[-1] h-[550px] w-[550px] border border-dashed border-black border-opacity-10 animate-spin will-change-transform`}
-				style={{ animationDuration: "110s" }}></div>
-		</>
+				className={`h-[120%] w-[120%] border-opacity-5 ${classnames}`}
+				style={{ animationDuration: `${speed-(speedGap*2)}s` }}></div>
+		</div>
 	);
 };
 

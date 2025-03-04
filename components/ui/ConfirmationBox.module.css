@@ -1,0 +1,55 @@
+.closed {
+    width: 0px;
+    height: 0px;
+    opacity: 0%;
+    z-index: -10;
+    animation-name: closeAnimation;
+    animation-duration: 2s;
+    animation-fill-mode: forwards;
+}
+
+.open {
+    animation-name: openAnimation;
+    animation-duration: 2s;
+    animation-fill-mode: forwards;
+}
+
+@keyframes closeAnimation {
+    0% {
+        width: 400px;
+        height: 100%;
+        opacity: 100%;
+        z-index: 10;
+    }
+    50% {
+        width: 400px;
+        height: 3px;
+    }
+    99%{
+        opacity: 100%;
+    }
+    100% {
+        height: 3px;
+        width: 0px;
+        opacity: 0%;
+        z-index: -10;
+    }
+  }
+
+@keyframes openAnimation {
+    0% {
+      opacity: 100%;
+      width: 0px;
+      height: 3px;
+    }
+    50% {
+        width: 400px;
+        height: 3px;
+    }
+    100% {
+        width: 400px;
+        height: 100%;
+        z-index: 10;
+        opacity: 100%;
+    }
+  }
