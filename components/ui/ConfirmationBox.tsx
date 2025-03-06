@@ -5,7 +5,8 @@ import styles from "./ConfirmationBox.module.css";
 type confirmationDataType = {
 	active: [string | null, string | null];
 	boxName: string
-	button1Text?: string;
+	actionButtonText?: string;
+	actionButtonFunction?: () => void;
 	closeButtonText?: string;
 	classNames?: string;
 	closeFunction: () => void;
@@ -15,13 +16,13 @@ type confirmationDataType = {
 const ConfirmationBox = ({
 	active,
 	boxName,
-	button1Text,
+	actionButtonText,
+	actionButtonFunction,
 	closeButtonText,
 	classNames,
 	closeFunction,
 	children,
 }: confirmationDataType) => {
-	console.log(active)
 	return (
 		<div className={`${classNames} ${active[0] === boxName ? "z-10" : "z-[-10]"}`}>
 			<div
@@ -37,11 +38,11 @@ const ConfirmationBox = ({
 						}}>
 						{closeButtonText}
 					</button>
-					<Link
-						href="/"
-						className="uppercase text-[14px] text-white px-3 tracking-wider flex items-center justify-center">
-						{button1Text}
-					</Link>
+					<button
+						className="uppercase text-[14px] text-white px-3 tracking-wider flex items-center justify-center"
+						onClick={actionButtonFunction}>
+						{actionButtonText}
+					</button>
 				</div>
 			</div>
 		</div>

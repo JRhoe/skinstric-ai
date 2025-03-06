@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import Button from "./ui/Button";
 import BackGroundSquares from "./ui/Squares";
 import Image from "next/image";
@@ -8,16 +8,23 @@ import placeholderImg from "@/public/ImagePlaceHolder.png";
 import ConfirmationBox from "./ui/ConfirmationBox";
 import DiamondIcon from "@/public/DiamondIcon.svg";
 
-type boxes = "scan" | "upload"
+type boxes = "scan" | "upload" | "failedUpload"
 
 const AnalysisModule = () => {
 
-	const [ConfirmationActive, setConfirmationActive] = useState<
+	const [confirmationActive, setConfirmationActive] = useState<
 		[boxes | null, boxes | null]
 	>([null, null]);
 
+	const fileInputRef = useRef<HTMLInputElement | null>(null);
+	const acceptedUploadTypes:string[] = [".png", ".jpeg"]
+
 	function activateConfirmationBox(boxToOpen: boxes) {
-		setConfirmationActive(prev => [boxToOpen, prev[0]])
+		if(boxToOpen === confirmationActive[0]){
+			setConfirmationActive([null, boxToOpen])
+		} else {
+			setConfirmationActive(prev => [boxToOpen, prev[0]])
+		}
 	}
 
 
@@ -51,7 +58,7 @@ const AnalysisModule = () => {
 				<div className="h-full w-[20%] flex items-center flex-col justify-between">
 					<div className="flex items-start justify-center">
 						<ConfirmationBox
-							active={ConfirmationActive}
+							active={confirmationActive}
 							boxName="scan"
 							closeButtonText="ok"
 							classNames="absolute h-[125px]"
@@ -62,13 +69,39 @@ const AnalysisModule = () => {
 								</p>
 							</div>
 						</ConfirmationBox>
+
 						<ConfirmationBox
-							active={ConfirmationActive}
+						active={confirmationActive}
+						boxName="failedUpload"
+						actionButtonText="Try again"
+						actionButtonFunction={() => setConfirmationActive(["upload", 'failedUpload'])}
+						classNames="absolute h-[125px]"
+						closeButtonText="close"
+						closeFunction={() => setConfirmationActive([null, "failedUpload"])}>
+							<div className="p-4">
+								<p className="text-white tracking-wider text-md uppercase text-center">That filetype is not supported, please upload a different image.</p>
+							</div>
+						</ConfirmationBox>
+
+						<ConfirmationBox
+							active={confirmationActive}
 							boxName={"upload"}
-							button1Text="upload"
+							actionButtonText="upload"
+							actionButtonFunction={() => {fileInputRef.current?.click()}}
 							closeButtonText="cancel"
 							classNames="absolute h-[300px]"
 							closeFunction={() => setConfirmationActive([null, "upload"])}>
+							<input type='file' accept="image/png, image/jpeg" style={{display:"none"}} ref={fileInputRef}
+							onChange={(e) => {
+								const fileName = e.target.value.toLocaleLowerCase()
+								for (let x of acceptedUploadTypes) {
+									if (fileName.endsWith(x)) {
+										console.log("good file type")
+										return
+									}
+								}
+								if(fileName !== undefined) setConfirmationActive(["failedUpload", "upload"])
+							}}/>
 							<div className="w-full h-full">
 								<div className="border-b border-b-white pl-3 p-2">
 									<p className="text-white tracking-wider uppercase text-sm">
